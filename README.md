@@ -1,4 +1,6 @@
-<h1 align="center"> # Dr. Drake's Research Group </h1>
+<h1 align="center">Dr. Drake's Research Group </h1>
+
+<div  align="center"><img src=".assets/logo.png" height="80px"></div>
 
 ### Public Projects:
 - <a href="dpol">dpol</a>

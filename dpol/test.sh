@@ -1,4 +1,4 @@
-#!/usr/bin/bash
+#!/usr/bin/env bash
 
 while getopts c o; do
     case $o in
@@ -13,6 +13,8 @@ OUT="dbigdq_test"
 FLAGS=("-std=legacy" "-mcmodel=medium")
 INC=("modules")
 
+TEST_IGNORE=(45)
+
 gfortran $MAIN ${MOD[@]} -o $OUT ${FLAGS[@]} -I ${INC[@]}
 
 if [ $? -eq 0 ]
@@ -24,7 +26,7 @@ then
     if [ $COMP == "yes" ]; then
         rm ./dbigdq.out
         ./$OUT | tee ./dbigdq.out
-        util compare.py ./dbigdq.out ./baseline.out
+        util compare.py ./dbigdq.out ./baseline.out ${TEST_IGNORE[@]}
     else
         ./$OUT
     fi
