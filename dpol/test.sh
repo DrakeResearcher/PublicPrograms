@@ -1,0 +1,35 @@
+#!/usr/bin/bash
+
+while getopts c o; do
+    case $o in
+        (c) COMP="yes";;
+    esac
+done
+shift "$((OPTIND - 1))"
+
+MAIN="src/dbigdq.f90"
+MOD=("build/linux/dqmodule.o" "build/linux/dqfun.o" "build/linux/wavext.o")
+OUT="dbigdq_test"
+FLAGS=("-std=legacy" "-mcmodel=medium")
+INC=("modules")
+
+gfortran $MAIN ${MOD[@]} -o $OUT ${FLAGS[@]} -I ${INC[@]}
+
+if [ $? -eq 0 ]
+then
+    echo "copying test .dat file..."
+    cp data/test.dat data/dall2020.dat
+    clear
+
+    if [ $COMP == "yes" ]; then
+        rm ./dbigdq.out
+        ./$OUT | tee ./dbigdq.out
+        util compare.py ./dbigdq.out ./baseline.out
+    else
+        ./$OUT
+    fi
+ 
+    
+else
+    echo "Compilation failed"
+fi
