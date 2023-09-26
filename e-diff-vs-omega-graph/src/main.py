@@ -23,12 +23,22 @@ def main():
 # Does the actual charting
 def chart_values(values: [[int, Decimal]], show=False):
     colors = [
+        "black",
         "red",
         "blue",
         "orange",
         "purple",
         "green",
         "yellow"
+    ]
+
+    styles = [
+        "-s",
+        "-^",
+        "-o",
+        "-x",
+        "-v",
+        "-S",
     ]
 
     fig, main = plt.subplots() # get figure and axis
@@ -41,7 +51,7 @@ def chart_values(values: [[int, Decimal]], show=False):
 
         main.plot(
             raw_data[0], raw_data[1], # x values, y values
-            "-o", # solid line with circle markers
+            styles[index], # solid line with circle markers
             markersize=2,
             color=colors[index],
         )
@@ -54,7 +64,7 @@ def chart_values(values: [[int, Decimal]], show=False):
 
         sub.plot(
             raw_data[0], raw_data[1],
-            "-o",
+            styles[index],
             markersize=2,
             color=colors[index],
         )
@@ -84,7 +94,7 @@ def chart_values(values: [[int, Decimal]], show=False):
 
     mark_inset(main, sub, loc1=1, loc2=3, fc="none", ec='0.5')
 
-    plt.savefig("graph.png", dpi=300)
+    # plt.savefig("graph.pgf", dpi=300)
 
     if show:
         plt.show()
